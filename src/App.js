@@ -8,52 +8,55 @@ function App() {
   const [employees, setEmployees] = useState(
     [
       {
+        id: 1,
         name: "Ademola",
         role: "Developer",
         img: "https://images.pexels.com/photos/936119/pexels-photo-936119.jpeg"
       },
       {
+        id: 2,
         name: "Jacob",
         role: "Teacher",
         img: "https://images.pexels.com/photos/935969/pexels-photo-935969.jpeg"
       },
       {
+        id: 3,
         name: "Fola",
         role: "Manager",
         img: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg"
       },
       {
+        id: 4,
         name: "Biodun",
         role: "Engineer",
         img: "https://images.pexels.com/photos/2104252/pexels-photo-2104252.jpeg"
       },
       {
+        id: 5,
         name: "Sherif",
         role: "Intern",
         img: "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg"
       },
       {
+        id: 6,
         name: "Jose",
         role: "Developer",
         img: "https://images.pexels.com/photos/1844547/pexels-photo-1844547.jpeg"
-      },
-      {
-        name: "Salim",
-        role: "HR",
-        img: "https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg"
-      },
-      {
-        name: "Ofia",
-        role: "Analyst",
-        img: "https://images.pexels.com/photos/1139743/pexels-photo-1139743.jpeg"
-      },
-      {
-        name: "Simon",
-        role: "Intern",
-        img: "https://images.pexels.com/photos/262391/pexels-photo-262391.jpeg"
       }
     ]
   )
+
+  function updateEmployee(id, newName, newRole){
+    const updatedEmployees = employees.map((employee) => {
+        if (id === employee.id) {
+          return {...employee, name: newName, role:newRole}
+        }
+
+        return employee
+    })
+    setEmployees(updatedEmployees)
+    
+  } 
 
   const showEmployees = true;
   
@@ -74,10 +77,12 @@ function App() {
               // console.log(uuidv4())
               return(
                 <Employee 
-                  key={uuidv4()}
+                  key={employee.id}
+                  id={employee.id}
                   name={employee.name}
                   role={employee.role}
                   img={employee.img}
+                  updateEmployee={updateEmployee}
                 />
               );
             })}
