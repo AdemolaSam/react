@@ -1,4 +1,4 @@
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import NotFound from '../components/NotFound'
 import { baseUrl } from '../shared'
@@ -6,6 +6,7 @@ import { baseUrl } from '../shared'
 export default function Customer() {
     const { id } = useParams()
     const navigate = useNavigate()
+    const location = useLocation()
     const [customer, setCustomer] = useState()
     const [tempCustomer, setTempCustomer] = useState()
     const [notFound, setNotFound] = useState(false)
@@ -14,15 +15,26 @@ export default function Customer() {
     const url= baseUrl + '/api/customers/' + id
 
     useEffect(() => {
-        fetch(url)
-            .then((response ) => {
+        fetch(url, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('access')
+            }
+        })
+            .then((response) => {
                 if(response.status === 404) {
                     setNotFound(true)
+                } else if(response.status === 401) {
+                    navigate('/login', {
+                        state: {
+                            previousUrl: location.pathname
+                        }
+                    })
                 }
 
-                if(!response.ok) {
-                    throw new Error('Something went wrong. Try again later.')
-                }
+                // if(!response.ok) {
+                //     throw new Error('Something went wrong. Try again later.')
+                // }
                 return response.json()
             })
             .then((data) => {
@@ -41,9 +53,17 @@ export default function Customer() {
         fetch(url, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('access')
             }
             }).then((response) => {
+                if(response.status === 401) {
+                    navigate('/login',{
+                        state: {
+                            previousUrl: location.pathname
+                        }
+                    })
+                }
                 if(!response.ok) {
                     throw new Error('Something went wrong.')
                 }
@@ -54,14 +74,22 @@ export default function Customer() {
 
     function updateCustomer(event) {
         event.preventDefault()
-        const url = baseUrl + 'api/customers/' + id
+        const url = baseUrl + 'api/customers/' + id + '/'
         fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type':'application/json'
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('access')
             },
             body: JSON.stringify(tempCustomer)
         }).then((response) => {
+            if(response.status === 401) {
+                navigate('/login', {
+                    state: {
+                        previousUrl: location.pathname
+                    }
+                })
+            }
             if(!response.ok) {
                 throw new Error('Something went wrong')
             }
@@ -85,13 +113,13 @@ export default function Customer() {
         if(customer.industry !== tempCustomer.industry) equal = false
 
         if(equal) setChanged(false)
-    })
+    },[changed])
 
     return (
         <>
             { notFound? <p>The customer with id {id} was not found.</p>: null}
             { customer
-                ? (<form id='customer' onSubmit={updateCustomer}>
+                ? (<form id='customer' onSubmit={updateCustomer}  className="max-w-sm w-full">
                     <p className='m-2 py-2 pl-2 block rounded'>Customer ID: {tempCustomer.id}</p>
                     <div className="md:flex md:items-center mb-6">
                         <div className="md:w-1/3">
