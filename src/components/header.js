@@ -1,13 +1,13 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect, useContext } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { NavLink } from 'react-router-dom'
+import { LoginContext } from '../App'
 
 const navigation = [
   { name: 'Employees', href: '/Employees' },
   { name: 'Customers', href: '/Customers' },
   { name: 'Dictionary', href: '/Dictionary' },
-  { name: 'Definition', href: '/Definition' },
 ]
 
 function classNames(...classes) {
@@ -15,6 +15,12 @@ function classNames(...classes) {
 }
 
 export default function Header(props) {
+
+  const [loggedIn, setLoggedIn] = useContext(LoginContext)
+
+  useEffect(()=> {
+    console.log(loggedIn)
+  })
   return (
     <>
       <Disclosure as="nav" className="bg-gray-800">
@@ -44,19 +50,6 @@ export default function Header(props) {
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
-                      {/* {navigation.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          className={classNames(
-                            item.current ? 'no-underline bg-gray-900 text-white' : 'no-underline text-gray-300 hover:bg-gray-700 hover:text-white',
-                            'rounded-md px-3 py-2 text-sm font-medium'
-                          )}
-                          aria-current={item.current ? 'page' : undefined}
-                        >
-                          {item.name}
-                        </a>
-                      ))} */}
 
                       {navigation.map((item) => (
                           <NavLink
@@ -76,6 +69,13 @@ export default function Header(props) {
                               {item.name}
                           </NavLink>
                       ))}
+                      <NavLink
+                              
+                          to={loggedIn ? "/logout": "login"}
+                          className="rounded-md px-3 py-2 text-sm font-medium no-underline text-gray-300 hover:bg-gray-700 hover:text-white"
+                        >
+                          {loggedIn ? "Logout" : "Login"}
+                      </NavLink>
                     </div>
                   </div>
                 </div>
@@ -165,6 +165,12 @@ export default function Header(props) {
                     {item.name}
                   </Disclosure.Button>
                 ))}
+                <NavLink     
+                  to={loggedIn ? "/logout": "login"}
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                >
+                  {loggedIn ? "Logout" : "Login"}
+                </NavLink>
               </div>
             </Disclosure.Panel>
           </>

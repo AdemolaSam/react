@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { baseUrl } from "../shared"
 import { useLocation, useNavigate } from "react-router-dom"
+import { LoginContext } from "../App"
 
 export default function Login(){
     const [username, setUserName] = useState('')
     const [password, setPassword] = useState('')
+    const [loggedIn, setLoggedIn] = useContext(LoginContext)
     const location = useLocation()
     const navigate = useNavigate()
     const url = baseUrl + 'api/token/'
@@ -29,6 +31,7 @@ export default function Login(){
             .then((data) => {
                 localStorage.setItem('access', data.access)
                 localStorage.setItem('refresh', data.refresh)
+                setLoggedIn(true)
                 navigate(location?.state?.previousUrl ? location.state.previousUrl : '/customers')
             })
             .catch(err => console.log(err))
