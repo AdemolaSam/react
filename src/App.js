@@ -9,7 +9,9 @@ import Definition from './pages/Definition';
 import NotFound from './components/NotFound';
 import Customer from './pages/Customer';
 import Login from './pages/Login';
+import Register from './pages/Register'
 import { baseUrl } from './shared';
+import CalendarPage from './pages/CalendarPage';
 
 export const LoginContext = createContext(true)
 
@@ -54,12 +56,14 @@ function App() {
       <BrowserRouter>
          <Header>
             <Routes>
+              <Route path='register' element={<Register/>} />
               <Route path='/login' element={<Login/>} />
               <Route path='/employees' element={<Employees />} />
               <Route path='/customers' element={<Customers />} />
               <Route path='customers/:id' element={<Customer />} />
               <Route path='/dictionary' element={<DictionaryPage />} />
               <Route path='dictionary/:search' element={<Definition />} />
+              <Route path='/calendar' element={<CalendarPage/>} />
               <Route path='/404' element={<NotFound/>} />
               <Route path='*' element={<NotFound/>} />
             </Routes>

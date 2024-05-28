@@ -13,7 +13,7 @@ const Definition = () => {
     // const [error, setError] = useState(false)
     const navigate = useNavigate()
 
-    const [word, errStatus ] = useFetch(
+    const { data: word, errStatus } = useFetch(
         `https://api.dictionaryapi.dev/api/v2/entries/en/${search}`
     );
     

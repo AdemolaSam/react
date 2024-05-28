@@ -33,10 +33,11 @@ const Dropdown = ({ style, items }) => {
                     {isOpen? 'Close': 'Open'}
                 </button>
                 {isOpen && (
+                    <div className='h-auto'>
                     <ul
-                        className={style ? style : 'p-0 w-max h-max rounded bg-gray-100'}
+                        className={style ? style : 'p-0 w-max h-max rounded bg-orange-300 max-h-20 overflow-y-auto'}
                     >
-                        {items.map((item, index) => (
+                        {items?.map((item, index) => (
                             <li 
                                 className='px-4 py-2 hover:text-gray-50 cursor-pointer hover:bg-slate-600'
                                 key={index}
@@ -46,6 +47,20 @@ const Dropdown = ({ style, items }) => {
                             </li>
                         ))}
                     </ul>
+                    <ul
+                    className={style ? style : 'p-0 w-max h-max rounded bg-gray-100'}
+                >
+                    {items?.map((item, index) => (
+                        <li 
+                            className='px-4 py-2 hover:text-gray-50 cursor-pointer hover:bg-slate-600'
+                            key={index}
+                            onClick={toggleDropdown} 
+                        >
+                            {item}
+                        </li>
+                    ))}
+                </ul>
+                </div>
                 ) }
             </div>
     )

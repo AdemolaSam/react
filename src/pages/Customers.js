@@ -3,69 +3,46 @@ import { Link, useNavigate, useLocation } from "react-router-dom"
 import { baseUrl } from "../shared"
 import AddCustomer from "../components/AddCustomer"
 import { LoginContext } from "../App"
+import useFetch from "../hooks/UseFetch"
 
 export default function Customers() {
-    const [customers, setCustomers] = useState()
+    // const [customers, setCustomers] = useState()
     const [show, setShow] = useState(false)
     const navigate = useNavigate()
     const location = useLocation()
     const [loggedIn, setLoggedIn] = useContext(LoginContext)
 
+    const url = baseUrl + '/api/customers/'
+    // data:{customers} ={} is done to get the customers from the data. 
+    // And the ={} is done to prevent error while the data fetching is yet to complete
+    const { 
+        request,
+        appendData,
+        data:{customers} = {},
+        setData,
+        errStatus
+    } = useFetch(url, { method:'GET',
+        headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('access')
+    } })
+
+    useEffect(()=> {
+        console.log(request, appendData, customers, errStatus)
+    })
+
     useEffect(() => {
-        const url= baseUrl + '/api/customers/'
-        fetch(url, {
-            headers: {
-                'Content-Type': 'application/js',
-                Authorization: 'Bearer ' + localStorage.getItem('access')
-            }
-        })
-            .then((response) => {
-                if(response.status === 401) {
-                    setLoggedIn(false)
-                    navigate('/login', {
-                        state: {
-                            previousUrl: location.pathname
-                        }
-                    })
-                }
-                return response.json()
-            })
-            .then((data) => {
-                // console.log(data)
-                setCustomers(data.customers)
-            })
-            .catch(err => console.log(err.message))
-    },[])
+        request()
+    }, [])
 
     function toggleShow() {
         setShow(!show)
     }
 
     function newCustomer(name, industry) {
-        const data = {
-            name: name,
-            industry: industry
-        }
-        const url = baseUrl + 'api/customers/'
-        fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            }).then((response) => {
-                if(!response.ok) {
-                    throw new Error('Something went wrong')
-                }
-                return response.json()
-            }).then((data) => {
-                toggleShow()
-                console.log(data)
-                setCustomers([...customers, data.customer])
-            }).catch((err) => {
-                console.log(err)
-            })
+        appendData({name:name, industry:industry})
     }
+
     return (
         <>
             <h1>Customers</h1>
