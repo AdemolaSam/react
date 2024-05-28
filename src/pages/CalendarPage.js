@@ -8,7 +8,7 @@ import DateComponent from '../components/DateComponent'
 
 const CalendarPage = () => {
   return (
-    <div className='w-[100%] flex flex-wrap'>
+    <div className='w-[100%]'>
 
         <CalendarC 
             time={<TimeSelect  
@@ -17,7 +17,7 @@ const CalendarPage = () => {
             /> }
         />
 
-        <DateComponent/>
+        {/* <DateComponent/> */}
         {/* <div>
             <Calendar/>
         </div> */}
