@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import Register from './pages/Register'
 import { baseUrl } from './shared';
 import CalendarPage from './pages/CalendarPage';
+import Bookings from './components/Bookings';
 
 export const LoginContext = createContext(true)
 
@@ -64,6 +65,7 @@ function App() {
               <Route path='/dictionary' element={<DictionaryPage />} />
               <Route path='dictionary/:search' element={<Definition />} />
               <Route path='/calendar' element={<CalendarPage/>} />
+              <Route path='booking' element={<Bookings />} />
               <Route path='/404' element={<NotFound/>} />
               <Route path='*' element={<NotFound/>} />
             </Routes>

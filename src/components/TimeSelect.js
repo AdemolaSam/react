@@ -1,10 +1,15 @@
 
 import React, { useState } from 'react';
 
-const TimeSelect = ({ hours, mins }) => {
+const TimeSelect = ({ hours, mins, display, passSelectedTime }) => {
     const [h, setH] = useState('00')
     const [m, setM] = useState('00')
     const [amOrPm, setAmOrPm] = useState('AM')
+    const [show, setShow] = useState(display)
+
+    const handlepassSelectedTime = () => {
+        passSelectedTime(`${h} : ${m} ${amOrPm}`)
+    }
 
     const handleHourChange = (e) => {
         setH(e.target.innerText)
@@ -24,10 +29,11 @@ const TimeSelect = ({ hours, mins }) => {
     }
 
   return (
-    <section className='w-auto marker ml-5 border-2 border-black text-black rounded'>
+    <section className='w-auto left-[50%] marker absolute bg-white grid grid-flow-row place-items-center outline-1 outline-none outline-black'>
         <div>
             <button
-                className='border-b-2 border-b-gray-600 w-full'
+                onClick={handlepassSelectedTime}
+                className='border-b-2 border-b-gray-600 w-full hover:bg-indigo-300'
             >
                 Add
             </button>
@@ -38,15 +44,15 @@ const TimeSelect = ({ hours, mins }) => {
                     {amOrPm}
             </button>
         </div>
-         <div className='w-full text-2xl font-bold p-2 border-b-2 border-b-gray-700'>
+         <div className='w-full text-2xl font-bold p-2 border-b-2 border-b-gray-700 text-center'>
             {h}:{m}
         </div>
         
         <div className='flex h-40 text-xl font-bold text-center'>
-            <div className='flex-1 h-full overflow-y-scroll border-r-2 overflow-x-scroll'>
+            <div className='flex-1 h-full overflow-y-scroll  overflow-x-scroll'>
                 {hours && hours.map((hour, i) => 
                 <div 
-                    className='w-full  border-r-black border-r-2 hover:bg-blue-gray-700 hover:cursor-pointer p-3'
+                    className='w-full hover:bg-blue-gray-700 hover:cursor-pointer p-3'
                     onClick={(e) => handleHourChange(e)}
                     key={i}>
                     {hour}
