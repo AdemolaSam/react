@@ -57,10 +57,10 @@ const DateComponent = ({ datelist }) => {
   return (
     <div className='w-auto h-auto'>
         <div className='pb-2 inline-flex justify-between w-[100%]'>
-            <h3 className='text-center'>Add Dates</h3>
+            <h3 className='text-center font-bold'>Add Dates</h3>
             <button 
                 onClick={handleOpenModal}
-                className='outline-1 outline p-2 rounded-2xl hover:bg-blue-700'
+                className='outline-1 outline p-2 rounded-2xl hover:bg-blue-900 hover:text-gray-100 underline lg:text-sm'
             >
                 View Selected
             </button>
@@ -76,13 +76,13 @@ const DateComponent = ({ datelist }) => {
                                 handleDateSelect(date)
                                 handleOpenModal()
                             }}
-                            className='p-1 bg-blue-gray-700 text-white ml-2 rounded-tl-md rounded-bl-md hover:bg-indigo-200'
+                            className='p-1 outline outline-1 ml-2 rounded-tl-md rounded-bl-md hover:bg-blue-900 hover:text-gray-100 text-lg'
                         >
                             {date}
                         </button>
                         <button 
                             onClick={(e)=> handleRemove(e, date)}
-                            className='p-1 hover:bg-red-800 rounded-tr-md rounded-br-md bg-red-300'
+                            className='p-1 hover:bg-red-700 rounded-tr-md rounded-br-md outline outline-1'
                         >
                             <TrashIcon/>
                         </button>
@@ -96,13 +96,13 @@ const DateComponent = ({ datelist }) => {
             <div className='w-[96%] mx-[2%] text-center inline-flex pt-2'>
                 <button 
                     onClick={''}
-                    className='w-full p-1 bg-indigo-100 rounded-lg hover:cursor-pointer hover:bg-indigo-300 mr-2'
+                    className='w-full mr-2 p-1 bg-indigo-100 rounded-lg hover:cursor-pointer hover:bg-blue-900 hover:text-gray-100 text-lg'
                 >
                     Add All
                 </button>
                 <button 
                     onClick={handleRemoveAll}
-                    className='w-full p-1 bg-red-300 rounded-lg hover:cursor-pointer hover:bg-red-600 ml-2'
+                    className='w-full ml-2 p-1 bg-red-300 rounded-lg hover:cursor-pointer hover:bg-black hover:text-gray-100 text-lg'
                 >
                     Remove All
                 </button>

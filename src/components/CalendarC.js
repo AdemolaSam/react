@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { monthCal, currentMonth, currentYear } from '../monthCalendar';
 import DateComponent from './DateComponent';
 
-const CalendarC = ({ time }) => {
+const CalendarC = () => {
     const [year, setYear] = useState(currentYear() || '');
     const [month, setMonth] = useState(currentMonth() || '');
     const [dates, setDates] = useState(monthCal(month, year) || {});
     const [showTime, setShowTime] = useState(false);
-    const [position, setPosition] = useState({ top: 0, left: 0 });
     const [selectedDates, setSelectedDates] = useState([]);
 
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -66,23 +65,18 @@ const CalendarC = ({ time }) => {
     };
 
     const handleShow = (e) => {
-        const rect = e.target.getBoundingClientRect();
-        setPosition({
-            top: rect.top + window.scrollY - 50,
-            left: rect.left + window.scrollX,
-        });
         setShowTime(!showTime);
     };
 
     return (
         <div className={`mx-2 w-[96%] h-[80%] lg:mt-[10%] md:mt-[10%] grid sm:grid-flow-row lg:grid-flow-col gap-4 `}>
-            <div className='flex-auto outline-black  opacity-70 bg-white shadow-lg rounded-xl md:rounded-none lg:col-span-2 lg:p-10'>
+            <div className='flex-auto outline-black shadow-lg rounded-xl md:rounded-none lg:col-span-2 lg:p-10'>
                 <div className='w-full flex justify-between pt-3 px-4 sm:py-1 lg:py-8'>
 
-                    <span className='text-indigo-700 font-extrabold text-xl mt-2'>{months[month]} {year}</span>
+                    <span className='text-blue-900 font-extrabold text-xl mt-2'>{months[month]} {year}</span>
                     <div className='flex items-center'>
                         <span
-                            className='hover:cursor-pointer lg:text-3xl sm:text-2xl md:text-2xl hover:text-indigo-400'
+                            className='hover:cursor-pointer lg:text-3xl sm:text-2xl md:text-2xl hover:text-blue-900'
                             onClick={() => getPrevMonth()}
                         >
                             &larr;
@@ -90,13 +84,13 @@ const CalendarC = ({ time }) => {
 
                         <span
                             onClick={() => thisMonth()}
-                            className='lg:text-2xl sm:text-xl md:text-xl hover:text-purple-900 px-3 sm:px-4 lg:px-5 hover:cursor-pointer'
+                            className='text-xl font-semibold hover:text-blue-900 px-3 sm:px-4 lg:px-5 hover:cursor-pointer'
                         >
                             Today
                         </span>
 
                         <span
-                            className='hover:cursor-pointer lg:text-3xl sm:text-2xl md:text-2xl hover:text-indigo-400'
+                            className='hover:cursor-pointer lg:text-3xl sm:text-2xl md:text-2xl hover:text-blue-900'
                             onClick={() => getNextMonth()}
                         >
                             &rarr;
@@ -120,7 +114,7 @@ const CalendarC = ({ time }) => {
                                 {dates[date] && dates[date].map((d, idx) => (
                                     <div
                                         key={idx}
-                                        className={`${d === new Date(Date.now()).getDate() ? 'bg-gray-400 rounded-lg' : ''} p-2 sm:p-3 lg:p-4 m-1 hover:bg-blue-200 hover:cursor-pointer hover:rounded-lg`}
+                                        className={`${d === new Date(Date.now()).getDate() ? 'bg-gray-400 rounded-lg' : ''} p-2 sm:p-3 lg:p-4 m-1 hover:bg-blue-900 hover:text-gray-100 hover:cursor-pointer hover:rounded-lg`}
                                     >
                                         {d || '-'}
                                     </div>
@@ -131,7 +125,7 @@ const CalendarC = ({ time }) => {
                 </div>
             </div>
 
-            <div className='w-full md:w-auto flex-auto text-sm sm:text-base md:text-lg lg:text-xl opacity-70 bg-white shadow-lg overflow-hidden rounded-xl p-3 md:rounded-none lg:col-span-1 lg:border-l outline-1 border-black'>
+            <div className='w-full md:w-auto flex-auto text-sm sm:text-base md:text-lg lg:text-xl shadow-lg overflow-hidden rounded-xl p-3 md:rounded-none lg:col-span-1'>
                 <DateComponent datelist={selectedDates} />
             </div>
         </div>

@@ -29,7 +29,7 @@ const TimeSelect = ({ hours, mins, display, passSelectedTime }) => {
     }
 
   return (
-    <section className='w-auto left-[50%] marker absolute bg-white grid grid-flow-row place-items-center outline-1 outline-none outline-black'>
+    <section className='w-auto left-[50%] marker bg-white grid grid-flow-row place-items-center outline-1 outline-none outline-black'>
         <div>
             <button
                 onClick={handlepassSelectedTime}
